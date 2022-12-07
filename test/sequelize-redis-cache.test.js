@@ -74,13 +74,13 @@ describe('Sequelize-Redis-Cache', function() {
     var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
-    return obj.find(query)
-      .then(function(res) {
+    return obj.findOne(query)
+      .then(function() {
         obj.cacheHit.should.equal(false);
         var obj2 = cacher(db, rc)
           .model('entity')
           .ttl(1);
-        return obj2.find(query)
+        return obj2.findOne(query)
           .then(function(res) {
             should.exist(res);
             obj2.cacheHit.should.equal(true);
@@ -98,7 +98,7 @@ describe('Sequelize-Redis-Cache', function() {
       .model('entity')
       .ttl(1);
     return obj.findOne(query)
-      .then(function(res) {
+      .then(function() {
         obj.cacheHit.should.equal(false);
         var obj2 = cacher(db, rc)
           .model('entity')
@@ -119,7 +119,7 @@ describe('Sequelize-Redis-Cache', function() {
     var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
-    return obj.find({ where: { id: 2 } })
+    return obj.findOne({ where: { id: 2 } })
       .then(function(res) {
         should.not.exist(res);
         obj.cacheHit.should.equal(false);
@@ -132,8 +132,8 @@ describe('Sequelize-Redis-Cache', function() {
     var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
-    return obj.find(query)
-      .then(function(res) {
+    return obj.findOne(query)
+      .then(function() {
         var key = obj.key();
         obj.clearCache(query)
           .then(function() {
@@ -151,8 +151,8 @@ describe('Sequelize-Redis-Cache', function() {
     var obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
-    return obj.find(query)
-      .then(function(res) {
+    return obj.findOne(query)
+      .then(function() {
         return done();
       }, onErr);
   });
@@ -164,13 +164,13 @@ describe('Sequelize-Redis-Cache', function() {
     obj = cacher(db, rc)
       .model('entity')
       .ttl(1);
-    return obj.find(query)
+    return obj.findOne(query)
       .then(function(res) {
-        res.toString().should.not.equal('[object SequelizeInstance]');
-        res.should.have.property('entity2s');
-        res.entity2s.should.have.length(1);
-        res.entity2s[0].toString().should.not.equal('[object SequelizeInstance]');
-        return done();
+          res.toString().should.not.equal('[object SequelizeInstance]');
+          res.should.have.property('entity2s');
+          res.entity2s.should.have.length(1);
+          res.entity2s[0].toString().should.not.equal('[object SequelizeInstance]');
+          return done();
       }, onErr);
   });
 
