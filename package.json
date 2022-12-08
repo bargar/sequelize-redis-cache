@@ -22,7 +22,7 @@
   "author": "Ryan Fink <ryanjfink@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "mocha": "2.5.3",
+    "mocha": "10.1.0",
     "prettier": "^2.8.0",
     "redis": "~2.6.0",
     "sequelize": "~3.23.0",
