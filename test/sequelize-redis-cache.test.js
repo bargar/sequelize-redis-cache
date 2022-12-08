@@ -4,6 +4,8 @@ var redis = require('redis');
 var Sequelize = require('sequelize');
 var should = require('should');
 var cacher = require('..');
+const util = require('../lib/util')
+const { isSequelizeModel } = util;
 
 var opts = {};
 opts.database = process.env.DB_NAME || 'sequelize_redis_cache_test';
@@ -277,5 +279,15 @@ describe('Sequelize-Redis-Cache', function() {
         res.should.equal(1);
         return done();
       }, onErr);
+  });
+
+  // we test this here since we have a real Sequelize model available
+  describe('isSequelizeModel', () => {
+    it('returns true for a Sequelize model', () => {
+      isSequelizeModel(Entity).should.be.true();
+    })
+    it('returns false for other values', () => {
+      [{}, 'foo', {a: 1, b: 'foo', c: 'bar'}].forEach(value => isSequelizeModel(value).should.equal(false));
+    })
   });
 });
