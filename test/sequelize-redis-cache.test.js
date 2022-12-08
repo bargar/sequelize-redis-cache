@@ -33,7 +33,7 @@ describe('Sequelize-Redis-Cache', function() {
   var Entity2;
   var inst;
 
-  before(function(done) {
+  before(async function() {
     rc = redis.createClient(redisPort, redisHost);
     rc.on('error', onErr);
     db = new Sequelize(opts.database, opts.user, opts.password, opts);
@@ -54,13 +54,13 @@ describe('Sequelize-Redis-Cache', function() {
     });
     Entity2.belongsTo(Entity, { foreignKey: 'entityId' });
     Entity.hasMany(Entity2, { foreignKey: 'entityId' });
-    Entity.sync({ force: true })
+    return Entity.sync({ force: true })
       .then(function() {
-        Entity2.sync({ force: true }).then(function() {
-          Entity.create({ name: 'Test Instance' }).then(function(entity) {
+        return Entity2.sync({ force: true }).then(function() {
+          return Entity.create({ name: 'Test Instance' }).then(function(entity) {
             inst = entity;
-            Entity2.create({ entityId: inst.id }).then(function() {
-              done();
+            return Entity2.create({ entityId: inst.id }).then(function() {
+
             })
             .catch(onErr);
           })
