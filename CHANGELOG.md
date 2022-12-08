@@ -1,3 +1,17 @@
+# v3.1.0
+- rename `sequelizeCacheKey` to `util.serializeFinderOptions`
+- remove reliance on node built-in `util.inspect`
+- upgrade mocha, sequelize dependencies
+
+# v3.0.1
+- upgrade to work with sequelize v6
+  - support symbols (replace circular-json with util.inspect)
+  - remove `find`
+- upgrade sqlite3 so tests are runnable
+- replace bluebird with native promises
+- add sequelizeCacheKey, tests
+- add prettier
+
 # v2.0.1 #
 - Fixed bug where same query may be returned from cache twice
 
