@@ -4,7 +4,8 @@
   "description": "Caching module for sequelize queries",
   "main": "lib/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha --timeout=5000 --require should test/**/*.js"
+    "test": "./node_modules/.bin/mocha --timeout=5000 --require should test/**/*.js",
+    "test:watch": "./node_modules/.bin/mocha --timeout=5000 --require should test/**/*.js --watch --watch-files lib/** test/**"
   },
   "repository": {
     "type": "git",
